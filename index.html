@@ -2,119 +2,154 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Guarda Bagagem em Braga / Luggage Storage in Braga</title>
   <style>
+    :root {
+      --primary-color: #2a7ae2;
+      --primary-dark: #195bbf;
+      --text-color: #ffffff;
+      --button-radius: 8px;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      text-align: center;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url(https://i.ibb.co/bM7hv11W/robbie-v-Xdu-K0-Se-Yj-U-unsplash.jpg) no-repeat center center fixed;
+      background-size: cover;
+      color: var(--text-color);
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 40px 20px;
-      color: #333;
     }
 
     .container {
-      max-width: 500px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 40px 30px;
+      text-align: center;
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 32px;
       margin-bottom: 10px;
+      color: #fff;
     }
 
     .lang-toggle {
-      margin-bottom: 20px;
+      margin: 20px 0;
     }
 
-    button {
+    .lang-toggle button {
       margin: 0 10px;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 6px;
-      background: #2a7ae2;
-      color: white;
+      padding: 10px 20px;
+      border: 2px solid var(--primary-color);
+      border-radius: var(--button-radius);
+      background: transparent;
+      color: #fff;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.3s ease;
     }
 
-    button:hover {
-      background: #195bbf;
+    .lang-toggle button:hover,
+    .lang-toggle button.active {
+      background: var(--primary-color);
+      color: white;
     }
 
     .text-section {
       display: none;
     }
 
-    .active {
+    .text-section.active {
       display: block;
     }
 
     .link-btn {
       display: block;
-      background: #2a7ae2;
+      background: var(--primary-color);
       color: white;
       text-decoration: none;
-      padding: 14px 20px;
-      margin: 15px 0;
-      border-radius: 8px;
+      padding: 14px 24px;
+      margin: 15px auto;
+      border-radius: var(--button-radius);
+      max-width: 300px;
       transition: background 0.3s ease;
     }
 
     .link-btn:hover {
-      background: #195bbf;
+      background: var(--primary-dark);
+    }
+
+    p {
+      font-size: 18px;
+      color: #ddd;
     }
 
     footer {
       margin-top: 30px;
       font-size: 14px;
-      color: #aaa;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🧳 Bagagem / Luggage</h1>
-    <div class="lang-toggle">
-      <button onclick="showLang('pt')">Português</button>
-      <button onclick="showLang('en')">English</button>
-    </div>
+  <div class="overlay">
+    <div class="container">
+      <h1>🧳 Bagagem / Luggage</h1>
 
-    <div id="pt" class="text-section active">
-      <p>Encontra locais seguros para deixar tua bagagem enquanto exploras a cidade!</p>
-      <a href="https://www.nannybag.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">Nannybag</a>
-      <a href="https://radicalstorage.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">Radical Storage</a>
-      <a href="https://stasher.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">Stasher</a>
-      <a href="https://bagbnb.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">BagBnB</a>
-      <a href="https://bounce.com/pt/city/braga" class="link-btn" target="_blank">Bounce</a>
-      <a href="https://luggagehero.com/braga/" class="link-btn" target="_blank">LuggageHero</a>
-    </div>
+      <div class="lang-toggle">
+        <button id="btn-pt" onclick="showLang('pt')">🇵🇹 Português</button>
+        <button id="btn-en" onclick="showLang('en')">🇬🇧 English</button>
+      </div>
 
-    <div id="en" class="text-section">
-      <p>Find secure places to store your luggage while you explore the city!</p>
-      <a href="https://www.nannybag.com/en/luggage-storage/braga" class="link-btn" target="_blank">Nannybag</a>
-      <a href="https://radicalstorage.com/en/luggage-storage/braga" class="link-btn" target="_blank">Radical Storage</a>
-      <a href="https://stasher.com/luggage-storage/portugal/braga" class="link-btn" target="_blank">Stasher</a>
-      <a href="https://bagbnb.com/luggage-storage/braga" class="link-btn" target="_blank">BagBnB</a>
-      <a href="https://bounce.com/pt/city/braga" class="link-btn" target="_blank">Bounce</a>
-      <a href="https://luggagehero.com/braga/" class="link-btn" target="_blank">LuggageHero</a>
-    </div>
+      <div id="pt" class="text-section active">
+        <p>Encontra locais seguros para deixar tua bagagem enquanto exploras a cidade!</p>
+        <a href="https://www.nannybag.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">Nannybag</a>
+        <a href="https://radicalstorage.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">Radical Storage</a>
+        <a href="https://stasher.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">Stasher</a>
+        <a href="https://bagbnb.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">BagBnB</a>
+        <a href="https://bounce.com/pt/city/braga" class="link-btn" target="_blank">Bounce</a>
+        <a href="https://luggagehero.com/braga/" class="link-btn" target="_blank">LuggageHero</a>
+      </div>
 
-    <footer>
-      &copy;Search by Google
-    </footer>
+      <div id="en" class="text-section">
+        <p>Find secure places to store your luggage while you explore the city!</p>
+        <a href="https://www.nannybag.com/en/luggage-storage/braga" class="link-btn" target="_blank">Nannybag</a>
+        <a href="https://radicalstorage.com/en/luggage-storage/braga" class="link-btn" target="_blank">Radical Storage</a>
+        <a href="https://stasher.com/luggage-storage/portugal/braga" class="link-btn" target="_blank">Stasher</a>
+        <a href="https://bagbnb.com/luggage-storage/braga" class="link-btn" target="_blank">BagBnB</a>
+        <a href="https://bounce.com/pt/city/braga" class="link-btn" target="_blank">Bounce</a>
+        <a href="https://luggagehero.com/braga/" class="link-btn" target="_blank">LuggageHero</a>
+      </div>
+
+      <footer>
+        &copy; Powered by Google
+      </footer>
+    </div>
   </div>
 
   <script>
     function showLang(lang) {
       document.getElementById('pt').classList.remove('active');
       document.getElementById('en').classList.remove('active');
+      document.getElementById('btn-pt').classList.remove('active');
+      document.getElementById('btn-en').classList.remove('active');
       document.getElementById(lang).classList.add('active');
+      document.getElementById('btn-' + lang).classList.add('active');
     }
   </script>
 </body>
 </html>
+
