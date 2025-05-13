@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guarda Bagagem em Braga / Luggage Storage in Braga</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      text-align: center;
+      padding: 40px 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .lang-toggle {
+      margin-bottom: 20px;
+    }
+
+    button {
+      margin: 0 10px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      background: #2a7ae2;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #195bbf;
+    }
+
+    .text-section {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .link-btn {
+      display: block;
+      background: #2a7ae2;
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .link-btn:hover {
+      background: #195bbf;
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧳 Bagagem / Luggage</h1>
+    <div class="lang-toggle">
+      <button onclick="showLang('pt')">Português</button>
+      <button onclick="showLang('en')">English</button>
+    </div>
+
+    <div id="pt" class="text-section active">
+      <p>Encontra locais seguros para deixar tua bagagem enquanto exploras a cidade!</p>
+      <a href="https://www.nannybag.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">Nannybag</a>
+      <a href="https://radicalstorage.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">Radical Storage</a>
+      <a href="https://stasher.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">Stasher</a>
+      <a href="https://bagbnb.com/pt/guarda-volumes/braga" class="link-btn" target="_blank">BagBnB</a>
+      <a href="https://bounce.com/pt/city/braga" class="link-btn" target="_blank">Bounce</a>
+      <a href="https://luggagehero.com/braga/" class="link-btn" target="_blank">LuggageHero</a>
+    </div>
+
+    <div id="en" class="text-section">
+      <p>Find secure places to store your luggage while you explore the city!</p>
+      <a href="https://www.nannybag.com/en/luggage-storage/braga" class="link-btn" target="_blank">Nannybag</a>
+      <a href="https://radicalstorage.com/en/luggage-storage/braga" class="link-btn" target="_blank">Radical Storage</a>
+      <a href="https://stasher.com/luggage-storage/portugal/braga" class="link-btn" target="_blank">Stasher</a>
+      <a href="https://bagbnb.com/luggage-storage/braga" class="link-btn" target="_blank">BagBnB</a>
+      <a href="https://bounce.com/pt/city/braga" class="link-btn" target="_blank">Bounce</a>
+      <a href="https://luggagehero.com/braga/" class="link-btn" target="_blank">LuggageHero</a>
+    </div>
+
+    <footer>
+      &copy;Search by Google
+    </footer>
+  </div>
+
+  <script>
+    function showLang(lang) {
+      document.getElementById('pt').classList.remove('active');
+      document.getElementById('en').classList.remove('active');
+      document.getElementById(lang).classList.add('active');
+    }
+  </script>
+</body>
+</html>
