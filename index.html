@@ -224,7 +224,7 @@
 
     function detectBrowserLanguage() {
       const navLang = (navigator.language || navigator.userLanguage || 'pt').substring(0,2).toLowerCase();
-      return ['pt', 'en', 'fr', 'es'].includes(navLang) ? navLang : 'pt';
+      return ['pt', 'en', 'fr', 'es'].includes(navLang) ? navLang : 'en';
     }
 
     document.addEventListener('DOMContentLoaded', () => {
