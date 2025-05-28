@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title id="page-title">🧳 Bagagem / Luggage</title>
+  <title>🧳 Guardar bagagem</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
   <style>
     :root {
@@ -61,52 +60,35 @@
       color: #fff;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.3s ease;
       display: flex;
       align-items: center;
-    }
-
-    .dropdown-btn .flag-icon {
-      margin-right: 10px;
+      gap: 10px;
     }
 
     .dropdown-content {
       display: none;
       position: absolute;
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.95);
       min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
       z-index: 1;
       border-radius: var(--button-radius);
       overflow: hidden;
-      animation: fadeIn 0.3s;
     }
 
     .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
+      color: #000;
+      padding: 10px 16px;
       text-decoration: none;
       display: flex;
       align-items: center;
+      gap: 10px;
       transition: background 0.3s ease;
     }
 
     .dropdown-content a:hover {
       background-color: var(--primary-color);
       color: white;
-    }
-
-    .dropdown-content a .flag-icon {
-      margin-right: 10px;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
     }
 
     .text-section {
@@ -148,21 +130,21 @@
 <body>
   <div class="overlay">
     <div class="container">
-      <h1>🧳 Guardar bagagem</h1>
+      <h1 id="page-title">🧳 Guardar bagagem</h1>
 
       <div class="dropdown">
-        <button class="dropdown-btn" id="dropdownMenuButton">
-          <span class="flag-icon flag-icon-pt"></span> Português
+        <button class="dropdown-btn" id="dropdownBtn">
+          <span class="flag-icon flag-icon-pt" id="current-flag"></span>
+          <span id="current-lang">Português</span>
         </button>
-        <div class="dropdown-content">
-          <a href="#" onclick="showLang('pt')"><span class="flag-icon flag-icon-pt"></span> Português</a>
-          <a href="#" onclick="showLang('es')"><span class="flag-icon flag-icon-es"></span> Español</a>
-          <a href="#" onclick="showLang('en')"><span class="flag-icon flag-icon-gb"></span> English</a>
-          <a href="#" onclick="showLang('fr')"><span class="flag-icon flag-icon-fr"></span> Français</a>
+        <div class="dropdown-content" id="dropdownMenu">
+          <a href="#" data-lang="pt"><span class="flag-icon flag-icon-pt"></span>Português</a>
+          <a href="#" data-lang="en"><span class="flag-icon flag-icon-gb"></span>English</a>
+          <a href="#" data-lang="es"><span class="flag-icon flag-icon-es"></span>Español</a>
+          <a href="#" data-lang="fr"><span class="flag-icon flag-icon-fr"></span>Français</a>
         </div>
       </div>
 
-      <!-- Seção em Português -->
       <div id="pt" class="text-section active">
         <p>Encontra locais seguros para deixar tua bagagem enquanto exploras a cidade!</p>
         <a href="https://www.nannybag.com/pt/deposito-bagagem/braga" class="link-btn" target="_blank">Nannybag</a>
@@ -172,7 +154,6 @@
         <a href="https://luggagehero.com/pt-pt/braga/" class="link-btn" target="_blank">LuggageHero</a>
       </div>
 
-      <!-- Seção em Inglês -->
       <div id="en" class="text-section">
         <p>Find secure places to store your luggage while you explore the city!</p>
         <a href="https://www.nannybag.com/en/luggage-storage/braga" class="link-btn" target="_blank">Nannybag</a>
@@ -182,7 +163,6 @@
         <a href="https://luggagehero.com/braga/" class="link-btn" target="_blank">LuggageHero</a>
       </div>
 
-      <!-- Seção em Francês -->
       <div id="fr" class="text-section">
         <p>Trouvez des endroits sûrs pour laisser vos bagages pendant que vous explorez la ville !</p>
         <a href="https://www.nannybag.com/fr/consigne-bagage/braga" class="link-btn" target="_blank">Nannybag</a>
@@ -192,7 +172,6 @@
         <a href="https://luggagehero.com/fr/braga/" class="link-btn" target="_blank">LuggageHero</a>
       </div>
 
-      <!-- Seção em Espanhol -->
       <div id="es" class="text-section">
         <p>¡Encuentra lugares seguros donde dejar tu equipaje mientras exploras la ciudad!</p>
         <a href="https://www.nannybag.com/es/consigna-equipaje/braga" class="link-btn" target="_blank">Nannybag</a>
@@ -216,26 +195,49 @@
       es: "🧳 Guardar el equipaje"
     };
 
-    function showLang(lang) {
-      const langs = ['pt', 'en', 'fr', 'es'];
-      langs.forEach(l => {
-        document.getElementById(l).classList.remove('active');
+    const langNames = {
+      pt: "Português",
+      en: "English",
+      fr: "Français",
+      es: "Español"
+    };
+
+    const flags = {
+      pt: "pt",
+      en: "gb",
+      fr: "fr",
+      es: "es"
+    };
+
+    document.querySelectorAll(".dropdown-content a").forEach(item => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        const lang = item.dataset.lang;
+
+        document.querySelectorAll(".text-section").forEach(section => {
+          section.classList.remove("active");
+        });
+        document.getElementById(lang).classList.add("active");
+
+        document.title = titles[lang];
+        document.getElementById("page-title").textContent = titles[lang];
+        document.getElementById("current-lang").textContent = langNames[lang];
+        document.getElementById("current-flag").className = `flag-icon flag-icon-${flags[lang]}`;
+        document.getElementById("dropdownMenu").style.display = "none";
       });
+    });
 
-      document.getElementById(lang).classList.add('active');
+    document.getElementById("dropdownBtn").addEventListener("click", () => {
+      const menu = document.getElementById("dropdownMenu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    });
 
-      // Atualiza o título da aba
-      document.title = titles[lang];
-      // Atualiza também o <h1> na página
-      document.querySelector("h1").textContent = titles[lang];
-
-      // Atualiza o botão do dropdown
-      const dropdownBtn = document.getElementById('dropdownMenuButton');
-      const flagIcon = dropdownBtn.querySelector('.flag-icon');
-      const langText = dropdownBtn.querySelector('span:last-child');
-      flagIcon.className = `flag-icon flag-icon-${lang}`;
-      langText.textContent = titles[lang].split(' ')[1];
-    }
+    document.addEventListener("click", function(event) {
+      const dropdown = document.querySelector(".dropdown");
+      if (!dropdown.contains(event.target)) {
+        document.getElementById("dropdownMenu").style.display = "none";
+      }
+    });
   </script>
 </body>
 </html>
