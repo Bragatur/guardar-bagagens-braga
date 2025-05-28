@@ -209,34 +209,47 @@
       es: "es"
     };
 
-    document.querySelectorAll(".dropdown-content a").forEach(item => {
-      item.addEventListener("click", (e) => {
-        e.preventDefault();
-        const lang = item.dataset.lang;
-
-        document.querySelectorAll(".text-section").forEach(section => {
-          section.classList.remove("active");
-        });
-        document.getElementById(lang).classList.add("active");
-
-        document.title = titles[lang];
-        document.getElementById("page-title").textContent = titles[lang];
-        document.getElementById("current-lang").textContent = langNames[lang];
-        document.getElementById("current-flag").className = `flag-icon flag-icon-${flags[lang]}`;
-        document.getElementById("dropdownMenu").style.display = "none";
+    function setLanguage(lang) {
+      document.querySelectorAll(".text-section").forEach(section => {
+        section.classList.remove("active");
       });
-    });
+      document.getElementById(lang).classList.add("active");
 
-    document.getElementById("dropdownBtn").addEventListener("click", () => {
-      const menu = document.getElementById("dropdownMenu");
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
-    });
+      document.title = titles[lang];
+      document.getElementById("page-title").textContent = titles[lang];
+      document.getElementById("current-lang").textContent = langNames[lang];
+      document.getElementById("current-flag").className = `flag-icon flag-icon-${flags[lang]}`;
+      document.getElementById("dropdownMenu").style.display = "none";
+    }
 
-    document.addEventListener("click", function(event) {
-      const dropdown = document.querySelector(".dropdown");
-      if (!dropdown.contains(event.target)) {
-        document.getElementById("dropdownMenu").style.display = "none";
-      }
+    function detectBrowserLanguage() {
+      const navLang = (navigator.language || navigator.userLanguage || 'pt').substring(0,2).toLowerCase();
+      return ['pt', 'en', 'fr', 'es'].includes(navLang) ? navLang : 'pt';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const lang = detectBrowserLanguage();
+      setLanguage(lang);
+
+      document.querySelectorAll(".dropdown-content a").forEach(item => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+          const selectedLang = item.dataset.lang;
+          setLanguage(selectedLang);
+        });
+      });
+
+      document.getElementById("dropdownBtn").addEventListener("click", () => {
+        const menu = document.getElementById("dropdownMenu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function(event) {
+        const dropdown = document.querySelector(".dropdown");
+        if (!dropdown.contains(event.target)) {
+          document.getElementById("dropdownMenu").style.display = "none";
+        }
+      });
     });
   </script>
 </body>
