@@ -46,49 +46,43 @@
       color: #fff;
     }
 
-    .dropdown {
-      position: relative;
-      display: inline-block;
+    /* Novo seletor de idiomas estilizado e clean */
+    .language-selector {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
       margin: 20px 0;
     }
 
-    .dropdown-btn {
-      padding: 10px 20px;
-      border: 2px solid var(--primary-color);
-      border-radius: var(--button-radius);
+    .lang-btn {
       background: transparent;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: rgba(255, 255, 255, 0.95);
-      min-width: 160px;
-      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-      z-index: 1;
+      border: 2px solid transparent;
       border-radius: var(--button-radius);
-      overflow: hidden;
-    }
-
-    .dropdown-content a {
-      color: #000;
-      padding: 10px 16px;
-      text-decoration: none;
+      cursor: pointer;
+      padding: 6px 8px;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 10px;
-      transition: background 0.3s ease;
     }
 
-    .dropdown-content a:hover {
+    .lang-btn .flag-icon {
+      font-size: 24px;
+      filter: grayscale(100%);
+      transition: filter 0.3s ease;
+    }
+
+    .lang-btn:hover {
+      border-color: var(--primary-color);
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .lang-btn.active {
+      border-color: var(--primary-color);
       background-color: var(--primary-color);
-      color: white;
+    }
+
+    .lang-btn.active .flag-icon {
+      filter: none;
     }
 
     .text-section {
@@ -132,17 +126,20 @@
     <div class="container">
       <h1 id="page-title">🧳 Guardar bagagem</h1>
 
-      <div class="dropdown">
-        <button class="dropdown-btn" id="dropdownBtn">
-          <span class="flag-icon flag-icon-pt" id="current-flag"></span>
-          <span id="current-lang">Português</span>
+      <!-- Novo seletor de idioma clean -->
+      <div class="language-selector" role="navigation" aria-label="Selecionar idioma">
+        <button class="lang-btn active" data-lang="pt" aria-label="Português">
+          <span class="flag-icon flag-icon-pt"></span>
         </button>
-        <div class="dropdown-content" id="dropdownMenu">
-          <a href="#" data-lang="pt"><span class="flag-icon flag-icon-pt"></span>Português</a>
-          <a href="#" data-lang="en"><span class="flag-icon flag-icon-gb"></span>English</a>
-          <a href="#" data-lang="es"><span class="flag-icon flag-icon-es"></span>Español</a>
-          <a href="#" data-lang="fr"><span class="flag-icon flag-icon-fr"></span>Français</a>
-        </div>
+        <button class="lang-btn" data-lang="en" aria-label="English">
+          <span class="flag-icon flag-icon-gb"></span>
+        </button>
+        <button class="lang-btn" data-lang="es" aria-label="Español">
+          <span class="flag-icon flag-icon-es"></span>
+        </button>
+        <button class="lang-btn" data-lang="fr" aria-label="Français">
+          <span class="flag-icon flag-icon-fr"></span>
+        </button>
       </div>
 
       <div id="pt" class="text-section active">
@@ -195,20 +192,6 @@
       es: "🧳 Guardar el equipaje"
     };
 
-    const langNames = {
-      pt: "Português",
-      en: "English",
-      fr: "Français",
-      es: "Español"
-    };
-
-    const flags = {
-      pt: "pt",
-      en: "gb",
-      fr: "fr",
-      es: "es"
-    };
-
     function setLanguage(lang) {
       document.querySelectorAll(".text-section").forEach(section => {
         section.classList.remove("active");
@@ -217,13 +200,15 @@
 
       document.title = titles[lang];
       document.getElementById("page-title").textContent = titles[lang];
-      document.getElementById("current-lang").textContent = langNames[lang];
-      document.getElementById("current-flag").className = `flag-icon flag-icon-${flags[lang]}`;
-      document.getElementById("dropdownMenu").style.display = "none";
+
+      // Atualiza botão ativo
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
     }
 
     function detectBrowserLanguage() {
-      const navLang = (navigator.language || navigator.userLanguage || 'pt').substring(0,2).toLowerCase();
+      const navLang = (navigator.language || navigator.userLanguage || 'en').substring(0,2).toLowerCase();
       return ['pt', 'en', 'fr', 'es'].includes(navLang) ? navLang : 'en';
     }
 
@@ -231,24 +216,10 @@
       const lang = detectBrowserLanguage();
       setLanguage(lang);
 
-      document.querySelectorAll(".dropdown-content a").forEach(item => {
-        item.addEventListener("click", (e) => {
-          e.preventDefault();
-          const selectedLang = item.dataset.lang;
-          setLanguage(selectedLang);
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          setLanguage(btn.dataset.lang);
         });
-      });
-
-      document.getElementById("dropdownBtn").addEventListener("click", () => {
-        const menu = document.getElementById("dropdownMenu");
-        menu.style.display = menu.style.display === "block" ? "none" : "block";
-      });
-
-      document.addEventListener("click", function(event) {
-        const dropdown = document.querySelector(".dropdown");
-        if (!dropdown.contains(event.target)) {
-          document.getElementById("dropdownMenu").style.display = "none";
-        }
       });
     });
   </script>
